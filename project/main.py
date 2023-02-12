@@ -12,3 +12,10 @@ bot = telebot.TeleBot(BOT_TOKEN)
 @bot.message_handler(commands=['hello-word'])
 def start_message(message):
     bot.send_message(message.chat.id, "Привет")
+
+@bot.message_handler(commands=['привет'])
+def start_message(message):
+    bot.send_message(message.chat.id, "Привет")
+
+
+bot.infinity_polling()
