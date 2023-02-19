@@ -17,11 +17,11 @@ def get_id_region(data):
     response = requests.request("GET", url, headers=headers, params=querystring, timeout=10)
 
 
+
     dataAPI = json.loads(response.text)
 
     id_city = dataAPI['sr'][0]['gaiaId']
 
     return id_city
 def get_hotel(data):
-    # print(data)
     pass
