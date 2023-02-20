@@ -2,6 +2,7 @@ from loader import bot
 from states.UserState import UserState
 from telebot.types import Message
 import utils.botfunc as botfunc
+from api import api
 
 
 
@@ -9,7 +10,7 @@ import utils.botfunc as botfunc
 def lowprice(message: Message) -> None:
     bot.set_state(message.from_user.id, UserState.city, message.chat.id)
     bot.send_message(message.from_user.id, f'В каком городе будем искать?')
-    print(message.from_user.language_code)
+    # print(message.from_user.language_code)
 
 @bot.message_handler(state=UserState.city)
 def get_city(message: Message) -> None:
@@ -20,7 +21,6 @@ def get_city(message: Message) -> None:
         with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
             data['city'] = message.text
             data['language'] = message.from_user.language_code + '_' + message.from_user.language_code.upper()
-            data['id_city'] = botfunc.get_id_region(message.text)
     else:
         bot.send_message(message.from_user.id, 'Название города может содержать только буквы')
 
@@ -50,8 +50,14 @@ def get_adults(message: Message) -> None:
         data['check_out'] = message.text
 @bot.message_handler(state=UserState.adults)
 def get_adults(message: Message) -> None:
+    bot.send_message(message.from_user.id, f'Введите количество дитей')
+    bot.set_state(message.from_user.id, UserState.children)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['adults'] = message.text
-        botfunc.get_hotel(data)
-    botfunc.get_hotel(data)
-
+@bot.message_handler(state=UserState.children)
+def get_adults(message: Message) -> None:
+    bot.send_message(message.from_user.id, f'Мы ищем для Вас информацию')
+    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+        data['children'] = message.text
+        data['gaiaId']=api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
+        botfunc.get_id_region(data)
