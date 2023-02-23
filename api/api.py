@@ -2,11 +2,11 @@ import requests
 import json
 from requests import get
 
-method_endswith = 'locations/v3/search'
-method_type = 'GET'
-querystring = {'city': 'Рим', 'language': 'ru_RU', 'quantity_hotel': '2', 'check_in': '54', 'check_out': '45', 'adults': '2', 'children': '1'}
+# method_endswith = 'locations/v3/search'
+# method_type = 'GET'
+# querystring = {'city': 'Рим', 'language': 'ru_RU', 'quantity_hotel': '2', 'check_in': '54', 'check_out': '45', 'adults': '2', 'children': '1'}
 
-url = f"https://hotels4.p.rapidapi.com{method_endswith}"
+# url = f"https://hotels4.p.rapidapi.com{method_endswith}"
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
                 params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
@@ -16,8 +16,8 @@ def api_request(method_endswith,  # Меняется в зависимости �
     # Определяем тип параметра
     if method_endswith == 'locations/v3/search':
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
-
-
+    elif method_endswith == 'properties/v2/list':
+        pass
 
 
     # В зависимости от типа запроса вызываем соответствующую функцию
