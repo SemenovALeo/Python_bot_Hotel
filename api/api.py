@@ -1,6 +1,7 @@
 import requests
 import json
 from requests import get
+from config_data import config
 
 # method_endswith = 'locations/v3/search'
 # method_type = 'GET'
@@ -56,8 +57,8 @@ def get_request(url, params):
         response = get(
             url,
             headers={
-	"X-RapidAPI-Key": "160f31d101mshe4663274241d81cp1f6ce4jsnf5d467672f45",
-	"X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+	"X-RapidAPI-Key": config.RAPID_API_KEY,
+	"X-RapidAPI-Host": config.RAPID_API_HOST
 },
             params=params,
             timeout=15
@@ -73,8 +74,8 @@ def post_request(url, params):
             url,
             headers={
                 "content-type": "application/json",
-                "X-RapidAPI-Key": "160f31d101mshe4663274241d81cp1f6ce4jsnf5d467672f45",
-                "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+                "X-RapidAPI-Key": config.RAPID_API_KEY,
+                "X-RapidAPI-Host": config.RAPID_API_HOST
             },
             params=params,
             timeout=15
