@@ -1,21 +1,15 @@
-import datetime
-
 from loader import bot
 from states.UserState import UserState
 from telebot.types import Message
 import utils.botfunc as botfunc
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 from api import api
-from datetime import datetime
-
-
 
 
 @bot.message_handler(commands=['lowprice'])
 def lowprice(message: Message) -> None:
     bot.set_state(message.from_user.id, UserState.city, message.chat.id)
     bot.send_message(message.from_user.id, f'В каком городе будем искать?')
-    # print(message.from_user.language_code)
+
 
 
 @bot.message_handler(state=UserState.city)
@@ -35,39 +29,20 @@ def get_city(message: Message) -> None:
 @bot.message_handler(state=UserState.number_of_hotels)
 def checkInDate(message: Message) -> None:
 
-    # bot.send_message(message.from_user.id, f'Введите дату заезда в формате mm/dd/yyyy')
-    # bot.set_state(message.from_user.id, UserState.checkInDate)
-
-    calendar, step = DetailedTelegramCalendar(locale='ru').build()
-    bot.send_message(message.chat.id,
-                     f"Select {LSTEP[step]}",
-                     reply_markup=calendar)
+    bot.send_message(message.from_user.id, f'Введите дату заезда в формате mm/dd/yy')
+    bot.set_state(message.from_user.id, UserState.checkInDate)
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['quantity_hotel'] = message.text
 
 
-@bot.callback_query_handler(func=DetailedTelegramCalendar.func())
-def cal(c):
-    result, key, step = DetailedTelegramCalendar(locale='ru', min_date=datetime.now().date()).process(c.data)
-    if not result and key:
-        bot.edit_message_text(f"Select {LSTEP[step]}",
-                              c.message.chat.id,
-                              c.message.message_id,
-                              reply_markup=key)
-    elif result:
-        # text = f"You selected {result}"
-        # bot.send_message(c.message.chat.id,text)
-        bot.set_state(c.message.from_user.id, UserState.checkInDate)
-
-
 @bot.message_handler(state=UserState.checkInDate)
 def checkOutDate(message: Message) -> None:
-    bot.send_message(message.from_user.id, f'Введите дату выезда в формате mm/dd/yyyy')
+    bot.send_message(message.from_user.id, f'Введите дату выезда в формате mm/dd/yy')
     bot.set_state(message.from_user.id, UserState.checkOutDate)
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['check_in'] = message.text
+        data['check_in'] = botfunc.get_datetime_str(message.text)
 
 
 @bot.message_handler(state=UserState.checkOutDate)
@@ -76,7 +51,7 @@ def get_adults(message: Message) -> None:
     bot.set_state(message.from_user.id, UserState.adults)
 
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['check_out'] = message.text
+        data['check_out'] = botfunc.get_datetime_str(message.text)
 
 
 @bot.message_handler(state=UserState.adults)
@@ -93,4 +68,5 @@ def get_adults(message: Message) -> None:
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['children'] = message.text
         data['gaiaId']=api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
+        data['hotels']=api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties']
         botfunc.get_id_region(data)
