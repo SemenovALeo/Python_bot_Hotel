@@ -68,5 +68,5 @@ def get_adults(message: Message) -> None:
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['children'] = message.text
         data['gaiaId']=api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
-        data['hotels']=api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties']
+        # data['hotels']=api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties']
         botfunc.get_id_region(data)
