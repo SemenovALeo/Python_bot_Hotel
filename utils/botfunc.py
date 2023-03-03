@@ -9,8 +9,7 @@ def get_datetime_str(value):
     return data
 
 def get_id_region(data):
-    # print(data["gaiaId"]["day"])
     print(data)
-    print(api.api_request('properties/v2/list',data,'POST'))
+    # print(api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'])
 
 

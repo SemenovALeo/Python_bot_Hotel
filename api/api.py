@@ -2,6 +2,7 @@ import requests
 import json
 from config_data import config
 from requests import get
+from requests import post
 
 # method_endswith = 'locations/v3/search'
 # method_type = 'GET'
@@ -23,16 +24,16 @@ def api_request(method_endswith,  # Меняется в зависимости �
             "eapid": 1,
             "locale": "ru_RU",
             "siteId": 300000001,
-            "destination": {"regionId": "6054439"},
+            "destination": {"regionId": "3023"},
             "checkInDate": {
                 "day": 10,
                 "month": 10,
-                "year": 2022
+                "year": 2023
             },
             "checkOutDate": {
                 "day": 15,
                 "month": 10,
-                "year": 2022
+                "year": 2023
             },
             "rooms": [
                 {
@@ -77,14 +78,14 @@ def get_request(url, params):
 
 def post_request(url, params):
     try:
-        response = get(
+        response = post(
             url,
             headers={
-                "content-type": "application/json",
+    "content-type": "application/json",
 	"X-RapidAPI-Key": f"{config.RAPID_API_KEY}",
 	"X-RapidAPI-Host": "hotels4.p.rapidapi.com"
 },
-            params=params,
+            json=params,
             timeout=60
         )
         if response.status_code == requests.codes.ok:
