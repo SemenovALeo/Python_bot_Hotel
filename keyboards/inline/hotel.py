@@ -18,5 +18,5 @@ def hotel_markup(data):
     # Функция "city_founding" уже возвращает список словарей с нужным именем и id
     destinations = InlineKeyboardMarkup()
     for value in hotels:
-        destinations.add(InlineKeyboardButton(text=value['name']), callback_data=value['name'] )
+        destinations.add(InlineKeyboardButton(text=value['name'], callback_data=f"{value['id']}"))
     return destinations
