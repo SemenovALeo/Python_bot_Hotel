@@ -59,7 +59,8 @@ def get_adults(message: Message) -> None:
 def get_adults(message: Message) -> None:
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['adults'] = message.text
-        data['gaiaId']=api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
+        data['gaiaId']=int(api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId'])
         # data['hotels']=api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties']
-        bot.send_message(message.from_user.id, f'Выберите отель из списка', reply_markup=hotel_markup(data))
+        # bot.send_message(message.from_user.id, f'Выберите отель из списка', reply_markup=hotel_markup(data)
+        print(api.api_request('properties/v2/list',data,'POST'))
 
