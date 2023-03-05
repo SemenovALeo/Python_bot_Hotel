@@ -22,9 +22,9 @@ def api_request(method_endswith,  # Меняется в зависимости �
         params = {
             "currency": "USD",
             "eapid": 1,
-            "locale": "ru_RU",
+            "locale": "en_US",
             "siteId": 300000001,
-            "destination": {"regionId": 6054439},
+            "destination": {"regionId": "6054439"},
             "checkInDate": {
                 "day": 10,
                 "month": 10,
@@ -80,20 +80,16 @@ def post_request(url, params):
     try:
         response = post(
             url,
+            json=params,
             headers={
                 "content-type": "application/json",
                 "X-RapidAPI-Key": f"{config.RAPID_API_KEY}",
                 "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
             },
-            json=params,
             timeout=100
         )
         if response.status_code == requests.codes.ok:
             return json.loads(response.text)
-        else:
-            print('Я тут ')
-            print(response.status_code)
-            print(requests.codes.ok)
     except ValueError:
         print('Нет соедениние с API хостом')
 
