@@ -14,6 +14,7 @@ def api_request(method_endswith,  # Меняется в зависимости �
                 params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
                 method_type  # Метод\тип запроса GET\POST
                 ):
+    print(params)
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
     # Определяем тип параметра
     if method_endswith == 'locations/v3/search':
@@ -22,26 +23,26 @@ def api_request(method_endswith,  # Меняется в зависимости �
         params = {
             "currency": "USD",
             "eapid": 1,
-            "locale": "en_US",
+            "locale": f"{params['language']}",
             "siteId": 300000001,
-            "destination": {"regionId": "6054439"},
+            "destination": {"regionId": f"{params['gaiaId']}"},
             "checkInDate": {
-                "day": 10,
-                "month": 10,
-                "year": 2022
+                "day": f"{params['check_in']['day']}",
+                "month": f"{params['check_in']['month']}",
+                "year": f"{params['check_in']['year']}"
             },
             "checkOutDate": {
-                "day": 15,
-                "month": 10,
-                "year": 2022
+                "day": f"{params['check_out']['day']}",
+                "month": f"{params['check_out']['month']}",
+                "year": f"{params['check_out']['year']}"
             },
             "rooms": [
                 {
-                    "adults": 2,
+                    "adults": f"{params['adults']}",
                 }
             ],
             "resultsStartingIndex": 0,
-            "resultsSize": 10,
+            "resultsSize": f"{params['quantity_hotel']}",
             "sort": "PRICE_LOW_TO_HIGH",
             "filters": {'availableFilter': 'SHOW_AVAILABLE_ONLY'}
         }
