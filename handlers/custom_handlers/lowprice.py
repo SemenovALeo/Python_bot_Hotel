@@ -66,6 +66,8 @@ def get_adults(message: Message) -> None:
 
 @bot.callback_query_handler(func=lambda call: True)
 def test_callback(call): # <- passes a CallbackQuery type object to your function
-    print('мы здесь')
+    if call.message:
+        print(call.data)
+        print(api.api_request('properties/v2/detail',call.data,'POST'))
 
 

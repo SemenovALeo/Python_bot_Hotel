@@ -19,7 +19,7 @@ def api_request(method_endswith,  # Меняется в зависимости �
     if method_endswith == 'locations/v3/search':
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
     elif method_endswith == 'properties/v2/list':
-        print(params)
+        # print(params)
         params = {
             "currency": "USD",
             "eapid": 1,
@@ -46,6 +46,15 @@ def api_request(method_endswith,  # Меняется в зависимости �
             "sort": "PRICE_LOW_TO_HIGH",
             "filters": {'availableFilter': 'SHOW_AVAILABLE_ONLY'}
         }
+    elif method_endswith =='properties/v2/detail':
+        params = {
+            "currency": "USD",
+            "eapid": 1,
+            "locale": "en_US",
+            "siteId": int(params),
+            "propertyId": "9209612"
+        }
+        print(params)
 
 
 
