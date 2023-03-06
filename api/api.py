@@ -14,38 +14,39 @@ def api_request(method_endswith,  # Меняется в зависимости �
                 params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
                 method_type  # Метод\тип запроса GET\POST
                 ):
-    print(params)
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
     # Определяем тип параметра
     if method_endswith == 'locations/v3/search':
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
     elif method_endswith == 'properties/v2/list':
+        print(params)
         params = {
             "currency": "USD",
             "eapid": 1,
-            "locale": f"{params['language']}",
+            "locale": params['language'],
             "siteId": 300000001,
-            "destination": {"regionId": f"{params['gaiaId']}"},
+            "destination": {"regionId": params['gaiaId']},
             "checkInDate": {
-                "day": f"{params['check_in']['day']}",
-                "month": f"{params['check_in']['month']}",
-                "year": f"{params['check_in']['year']}"
+                "day": params['check_in']['day'],
+                "month": params['check_in']['month'],
+                "year": params['check_in']['year']
             },
             "checkOutDate": {
-                "day": f"{params['check_out']['day']}",
-                "month": f"{params['check_out']['month']}",
-                "year": f"{params['check_out']['year']}"
+                "day": params['check_out']['day'],
+                "month": params['check_out']['month'],
+                "year": params['check_out']['year']
             },
             "rooms": [
                 {
-                    "adults": f"{params['adults']}",
+                    "adults": int(params['adults']),
                 }
             ],
             "resultsStartingIndex": 0,
-            "resultsSize": f"{params['quantity_hotel']}",
+            "resultsSize": int(params['quantity_hotel']),
             "sort": "PRICE_LOW_TO_HIGH",
             "filters": {'availableFilter': 'SHOW_AVAILABLE_ONLY'}
         }
+
 
 
     # В зависимости от типа запроса вызываем соответствующую функцию
