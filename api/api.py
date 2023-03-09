@@ -50,9 +50,9 @@ def api_request(method_endswith,  # Меняется в зависимости �
         params = {
             "currency": "USD",
             "eapid": 1,
-            "locale": "en_US",
-            "siteId": int(params),
-            "propertyId": "9209612"
+            "locale": "ru_RU",
+            "siteId": 300000001,
+            "propertyId": params
         }
         print(params)
 

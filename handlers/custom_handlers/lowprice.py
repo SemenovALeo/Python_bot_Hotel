@@ -1,3 +1,5 @@
+import json
+
 from keyboards.inline.hotel import hotel_markup
 from loader import bot
 from states.UserState import UserState
@@ -15,15 +17,15 @@ def lowprice(message: Message) -> None:
 
 @bot.message_handler(state=UserState.city)
 def get_city(message: Message) -> None:
-    if message.text.isalpha():
+    # if message.text.isalpha():
         bot.send_message(message.from_user.id, f'Сколько отелей показываем? (не больше 10)')
         bot.set_state(message.from_user.id, UserState.number_of_hotels)
 
         with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
             data['city'] = message.text
             data['language'] = message.from_user.language_code + '_' + message.from_user.language_code.upper()
-    else:
-        bot.send_message(message.from_user.id, 'Название города может содержать только буквы')
+    # else:
+    #     bot.send_message(message.from_user.id, 'Название города может содержать только буквы')
 
 
 
@@ -68,6 +70,10 @@ def get_adults(message: Message) -> None:
 def test_callback(call): # <- passes a CallbackQuery type object to your function
     if call.message:
         print(call.data)
-        print(api.api_request('properties/v2/detail',call.data,'POST'))
-
+        bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']}")
+        bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline']}")
+        bot.send_message(call.from_user.id,api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
+        # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name'] имя отеля
+        # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline'] описание мини
+        print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
 
