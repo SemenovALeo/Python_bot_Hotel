@@ -72,8 +72,9 @@ def test_callback(call): # <- passes a CallbackQuery type object to your functio
         print(call.data)
         bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']}")
         bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline']}")
-        bot.send_message(call.from_user.id,api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
+        bot.send_photo(call.from_user.id,api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
         # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name'] имя отеля
         # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline'] описание мини
         print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
+        # inputMediaPhoto
 
