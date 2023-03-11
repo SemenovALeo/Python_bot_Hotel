@@ -1,4 +1,5 @@
 import datetime
+from loader import bot
 from api import api
 
 def get_datetime_str(value):
@@ -12,4 +13,17 @@ def get_id_region(data):
     print(data)
     # print(api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'])
 
+def GetMessageOutput(data):
+    HotelName = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo']['summary']['name']
+    description = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo']['summary']['tagline']
+    image = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo'][
+                       'propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url']
 
+    return f"{HotelName}/n {description}/n {image}"
+
+
+# for obj in list_hotel:
+#     if user.photos.isdigit():
+#         medias = [ types.InputMediaPhoto(media, caption=obj[0][0])
+#             if index == 0 else types.InputMediaPhoto(media) for index, media in enumerate(flatten(obj[1]))]       bot.send_media_group(chat_id, medias)
+#     else:        bot.send_message(chat_id, obj)

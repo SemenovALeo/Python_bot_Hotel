@@ -80,7 +80,7 @@ def get_request(url, params):
 	"X-RapidAPI-Host": "hotels4.p.rapidapi.com"
 },
             params=params,
-            timeout=100
+            timeout=10
         )
         if response.status_code == requests.codes.ok:
             return json.loads(response.text)
@@ -97,7 +97,7 @@ def post_request(url, params):
                 "X-RapidAPI-Key": f"{config.RAPID_API_KEY}",
                 "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
             },
-            timeout=100
+            timeout=10
         )
         if response.status_code == requests.codes.ok:
             return json.loads(response.text)
