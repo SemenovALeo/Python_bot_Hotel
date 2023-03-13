@@ -19,7 +19,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
     if method_endswith == 'locations/v3/search':
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
     elif method_endswith == 'properties/v2/list':
-        # print(params)
         params = {
             "currency": "USD",
             "eapid": 1,
@@ -54,9 +53,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
             "siteId": 300000001,
             "propertyId": params
         }
-        print(params)
-
-
 
     # В зависимости от типа запроса вызываем соответствующую функцию
     if method_type == 'GET':

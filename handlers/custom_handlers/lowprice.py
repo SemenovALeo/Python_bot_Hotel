@@ -4,6 +4,7 @@ from keyboards.inline.hotel import hotel_markup
 from loader import bot
 from states.UserState import UserState
 from telebot.types import Message
+from telebot import types
 import utils.botfunc as botfunc
 from api import api
 
@@ -69,17 +70,10 @@ def get_adults(message: Message) -> None:
 @bot.callback_query_handler(func=lambda call: True)
 def test_callback(call): # <- passes a CallbackQuery type object to your function
     if call.message:
-        # bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']}")
-        # bot.send_message(call.from_user.id,f"Отель {api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline']}")
-        # bot.send_photo(call.from_user.id,api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
-        bot.send_media_group(call.from_user.id,media=[api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name'],
-                                                        api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline'],
-                                                        api.api_request('properties/v2/detail', call.data, 'POST')['data']['propertyInfo']['propertyGallery'][
-                                                         'imagesGrouped'][0]['images'][0]['image']['url']
-        ])
-        # botfunc.GetMessageOutput(call)
-        # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name'] имя отеля
-        # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline'] описание мини
-        # print(api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url'])
-        # inputMediaPhoto
+        nameHotel = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']
+        description = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['tagline']
+        HotelImage = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url']
+        # bot.send_photo(call.from_user.id,HotelImage,caption=f'🏨 {nameHotel}\n'
+                                                            # f'{description}')
+        botfunc.gef_foro(call.data)
 

@@ -13,13 +13,13 @@ def get_id_region(data):
     print(data)
     # print(api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'])
 
-def GetMessageOutput(data):
-    HotelName = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo']['summary']['name']
-    description = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo']['summary']['tagline']
-    image = api.api_request('properties/v2/detail', data, 'POST')['data']['propertyInfo'][
-                       'propertyGallery']['imagesGrouped'][0]['images'][0]['image']['url']
+def gef_foro(data):
+    value = api.api_request('properties/v2/detail',data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped']
+    foto_hotel = {'Exterior':{},'Rooms':{}}
+    for foto in value:
+        if value in 'Rooms':
+            print(foto)
 
-    return f"{HotelName}/n {description}/n {image}"
 
 
 # for obj in list_hotel:
