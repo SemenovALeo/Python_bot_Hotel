@@ -13,12 +13,22 @@ def get_id_region(data):
     print(data)
     # print(api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'])
 
-def gef_foro(data):
-    value = api.api_request('properties/v2/detail',data,'POST')['data']['propertyInfo']['propertyGallery']['imagesGrouped']
-    foto_hotel = {'Exterior':{},'Rooms':{}}
-    for foto in value:
-        if value in 'Rooms':
-            print(foto)
+def gef_foto(data):
+    value = api.api_request('properties/v2/detail',data,'POST')['data']['propertyInfo']['propertyGallery']['images']
+    foto = []
+    count = 0
+    for i in value:
+        if count < 3:
+            foto.append(i['image']['url'])
+            count += 1
+        else:
+            break
+
+    return foto
+
+
+
+    # print(foto_hotel)
 
 
 

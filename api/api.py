@@ -15,10 +15,14 @@ def api_request(method_endswith,  # Меняется в зависимости �
                 method_type  # Метод\тип запроса GET\POST
                 ):
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
+
     # Определяем тип параметра
     if method_endswith == 'locations/v3/search':
+        print(params)
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
+        # print(params) обнови апи не забудь
     elif method_endswith == 'properties/v2/list':
+        print(params)
         params = {
             "currency": "USD",
             "eapid": 1,
@@ -99,7 +103,4 @@ def post_request(url, params):
             return json.loads(response.text)
     except ValueError:
         print('Нет соедениние с API хостом')
-
-
-
 
