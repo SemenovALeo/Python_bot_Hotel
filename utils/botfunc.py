@@ -9,9 +9,6 @@ def get_datetime_str(value):
             'year':data_value.date().year}
     return data
 
-def get_id_region(data):
-    print(data)
-    # print(api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'])
 
 def gef_foto(data):
     value = api.api_request('properties/v2/detail',data,'POST')['data']['propertyInfo']['propertyGallery']['images']
@@ -27,13 +24,12 @@ def gef_foto(data):
     return foto
 
 
-
-    # print(foto_hotel)
-
-
-
-# for obj in list_hotel:
-#     if user.photos.isdigit():
-#         medias = [ types.InputMediaPhoto(media, caption=obj[0][0])
-#             if index == 0 else types.InputMediaPhoto(media) for index, media in enumerate(flatten(obj[1]))]       bot.send_media_group(chat_id, medias)
-#     else:        bot.send_message(chat_id, obj)
+def get_hotels(data):
+    responce = api.api_request('properties/v2/list',data,'POST')
+    if responce:
+        hotels = list()
+        for dest in responce['data']['propertySearch']['properties']:
+            hotels.append({'id': dest['id'],'name': dest['name']})
+    else:
+        hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
+    return hotels
