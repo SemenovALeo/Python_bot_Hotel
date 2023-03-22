@@ -11,3 +11,4 @@ class UserState(StatesGroup):
     check_in = State()  # выбор даты заезда
     check_out = State()  # выбор даты выезда
     all = State()  # все данные получены
+    # price = State()

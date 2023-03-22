@@ -11,6 +11,7 @@ def hotel_founding(data):
     if responce:
         hotels = list()
         for dest in responce['data']['propertySearch']['properties']:
+            # print(dest)
             hotels.append({'id': dest['id'],'name': dest['name']})
     else:
         hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})

@@ -24,12 +24,16 @@ def gef_foto(data):
     return foto
 
 
-def get_hotels(data):
-    responce = api.api_request('properties/v2/list',data,'POST')
-    if responce:
-        hotels = list()
-        for dest in responce['data']['propertySearch']['properties']:
-            hotels.append({'id': dest['id'],'name': dest['name']})
-    else:
-        hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
-    return hotels
+def OutputMessage():
+    pass
+
+
+# def get_hotels(data):
+#     responce = api.api_request('properties/v2/list',data,'POST')
+#     if responce:
+#         hotels = list()
+#         for dest in responce['data']['propertySearch']['properties']:
+#             hotels.append({'id': dest['id'],'name': dest['name']})
+#     else:
+#         hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
+#     return hotels

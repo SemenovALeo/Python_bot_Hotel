@@ -26,7 +26,7 @@ def api_request(method_endswith,  # Меняется в зависимости �
         params = {
             "currency": "USD",
             "eapid": 1,
-            "locale": params['language'],
+            "locale": str(params['language']),
             "siteId": 300000001,
             "destination": {"regionId": params['gaiaId']},
             "checkInDate": {
@@ -48,8 +48,8 @@ def api_request(method_endswith,  # Меняется в зависимости �
             "resultsSize": int(params['quantity_hotel']),
             "sort": "PRICE_LOW_TO_HIGH",
             "filters": {
-                'hotelName': params['hotelName'],
-                'availableFilter': 'SHOW_AVAILABLE_ONLY'
+                'hotelName': params['hotelName'] if 'hotelName' in params else 0,
+                'availableFilter': 'SHOW_AVAILABLE_ONLY',
             }
         }
     elif method_endswith =='properties/v2/detail':
