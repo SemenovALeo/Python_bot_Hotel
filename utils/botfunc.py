@@ -24,8 +24,6 @@ def gef_foto(data):
     return foto
 
 
-def OutputMessage():
-    pass
 
 
 # def get_hotels(data):

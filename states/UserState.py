@@ -1,6 +1,6 @@
 from telebot.handler_backends import State, StatesGroup
 
-class UserState(StatesGroup):
+class User_State(StatesGroup):
     city = State()  # выбор города
     city_received = State()  # город найден
     number_of_hotels = State() # количество отелей

@@ -1,6 +1,6 @@
 from keyboards.inline.hotel import hotel_markup
 from loader import bot
-from states.UserState import UserState
+from states.UserState import User_State
 from telebot.types import Message, InputMediaPhoto
 from telebot import types
 import utils.botfunc as botfunc
@@ -9,16 +9,16 @@ from api import api
 
 @bot.message_handler(commands=['lowprice'])
 def lowprice(message: Message) -> None:
-    bot.set_state(message.from_user.id, UserState.city, message.chat.id)
+    bot.set_state(message.from_user.id, User_State.city, message.chat.id)
     bot.send_message(message.from_user.id, f'В каком городе будем искать?')
 
 
 
-@bot.message_handler(state=UserState.city)
+@bot.message_handler(state=User_State.city)
 def get_city(message: Message) -> None:
     # if message.text.isalpha():
         bot.send_message(message.from_user.id, f'Сколько отелей показываем? (не больше 10)')
-        bot.set_state(message.from_user.id, UserState.number_of_hotels)
+        bot.set_state(message.from_user.id, User_State.number_of_hotels)
 
         with bot.retrieve_data(message.from_user.id) as data:
             data['city'] = message.text
@@ -28,35 +28,35 @@ def get_city(message: Message) -> None:
 
 
 
-@bot.message_handler(state=UserState.number_of_hotels)
-def checkInDate(message: Message) -> None:
+@bot.message_handler(state=User_State.number_of_hotels)
+def check_In_Date(message: Message) -> None:
 
     bot.send_message(message.from_user.id, f'Введите дату заезда в формате dd/mm/yy')
-    bot.set_state(message.from_user.id, UserState.checkInDate)
+    bot.set_state(message.from_user.id, User_State.checkInDate)
 
     with bot.retrieve_data(message.from_user.id) as data:
         data['quantity_hotel'] = message.text
 
 
-@bot.message_handler(state=UserState.checkInDate)
-def checkOutDate(message: Message) -> None:
+@bot.message_handler(state=User_State.checkInDate)
+def check_Out_Date(message: Message) -> None:
     bot.send_message(message.from_user.id, f'Введите дату выезда в формате dd/mm/yy')
-    bot.set_state(message.from_user.id, UserState.checkOutDate)
+    bot.set_state(message.from_user.id, User_State.checkOutDate)
 
     with bot.retrieve_data(message.from_user.id) as data:
         data['check_in'] = botfunc.get_datetime_str(message.text)
 
 
-@bot.message_handler(state=UserState.checkOutDate)
+@bot.message_handler(state=User_State.checkOutDate)
 def get_adults(message: Message) -> None:
     bot.send_message(message.from_user.id, f'Введите количество взрослых')
-    bot.set_state(message.from_user.id, UserState.adults)
+    bot.set_state(message.from_user.id, User_State.adults)
 
     with bot.retrieve_data(message.from_user.id) as data:
         data['check_out'] = botfunc.get_datetime_str(message.text)
 
 
-@bot.message_handler(state=UserState.adults)
+@bot.message_handler(state=User_State.adults)
 def get_adults(message: Message) -> None:
     with bot.retrieve_data(message.from_user.id) as data:
         data['adults'] = message.text
