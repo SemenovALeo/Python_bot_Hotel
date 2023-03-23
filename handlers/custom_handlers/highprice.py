@@ -6,12 +6,13 @@ import utils.botfunc as botfunc
 from api import api
 
 
-@bot.message_handler(commands=['lowprice'])
+@bot.message_handler(commands=['highprice'])
 def lowprice(message: Message) -> None:
     bot.set_state(message.from_user.id, User_State.city, message.chat.id)
     bot.send_message(message.from_user.id, f'В каком городе будем искать?')
     with bot.retrieve_data(message.from_user.id) as data:
         data['command'] = message.text
+
 
 
 @bot.message_handler(state=User_State.city)

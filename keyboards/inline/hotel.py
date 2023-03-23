@@ -15,6 +15,9 @@ def hotel_founding(data):
             hotels.append({'id': dest['id'],'name': dest['name']})
     else:
         hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
+
+    if data['command'] == '/highprice':
+        hotels.reverse()
     return hotels
 
 def hotel_markup(data):
