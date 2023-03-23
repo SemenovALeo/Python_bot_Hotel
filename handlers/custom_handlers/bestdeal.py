@@ -6,13 +6,12 @@ import utils.botfunc as botfunc
 from api import api
 
 
-@bot.message_handler(commands=['highprice'])
+@bot.message_handler(commands=['bestdeal'])
 def lowprice(message: Message) -> None:
     bot.set_state(message.from_user.id, User_State.city, message.chat.id)
     bot.send_message(message.from_user.id, f'В каком городе будем искать?')
     with bot.retrieve_data(message.from_user.id) as data:
         data['command'] = message.text
-
 
 
 @bot.message_handler(state=User_State.city)
@@ -72,9 +71,7 @@ def test_callback(call): # <- passes a CallbackQuery type object to your functio
         with bot.retrieve_data(call.from_user.id) as data:
             data['hotelName'] = nameHotel
         price = api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'][0]['price']['lead']['formatted']
-        distance = api.api_request('properties/v2/list', data, 'POST')['data']['propertySearch']['properties'][0]['destinationInfo']['distanceFromDestination']['value']
-
-        print(distance)
+        distance = api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'][0]['destinationInfo']['distanceFromDestination']['value']
 
 
 

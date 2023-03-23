@@ -22,7 +22,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
         params = {"q":f"{params['city']}","locale":f"{params['language']}","langid":"1033","siteid":"300000001"}
         # print(params) обнови апи не забудь
     elif method_endswith == 'properties/v2/list':
-        print(params)
         params = {
             "currency": "USD",
             "eapid": 1,
@@ -46,12 +45,13 @@ def api_request(method_endswith,  # Меняется в зависимости �
             ],
             "resultsStartingIndex": 0,
             "resultsSize": int(params['quantity_hotel']),
-            "sort": "PRICE_LOW_TO_HIGH",
+            "sort": "PRICE_LOW_TO_HIGH" if params['command'] != '/bestdeal' else 'PRICE_LOW_TO_HIGH|DISTANCE',
             "filters": {
                 'hotelName': params['hotelName'] if 'hotelName' in params else 0,
                 'availableFilter': 'SHOW_AVAILABLE_ONLY',
             }
         }
+        print(params)
     elif method_endswith =='properties/v2/detail':
         params = {
             "currency": "USD",
