@@ -62,4 +62,4 @@ def get_adults(message: Message) -> None:
         print('я тут')
         if data['command'] == 'highprice':
             print('я тут')
-            test_callback()
+            # test_callback()
