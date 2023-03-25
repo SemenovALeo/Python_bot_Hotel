@@ -51,7 +51,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
                 'availableFilter': 'SHOW_AVAILABLE_ONLY',
             }
         }
-        print(params)
     elif method_endswith =='properties/v2/detail':
         params = {
             "currency": "USD",

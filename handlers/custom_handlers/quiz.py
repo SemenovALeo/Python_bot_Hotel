@@ -4,7 +4,6 @@ from states.UserState import User_State
 from telebot.types import Message, InputMediaPhoto
 import utils.botfunc as botfunc
 from api import api
-from handlers.custom_handlers.highprice import test_callback
 
 @bot.message_handler(commands=['highprice', 'bestdeal', 'lowprice'])
 def lowprice(message: Message) -> None:
@@ -57,9 +56,9 @@ def get_adults(message: Message) -> None:
 def get_adults(message: Message) -> None:
     with bot.retrieve_data(message.from_user.id) as data:
         data['adults'] = message.text
-        data['gaiaId']=api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
+        data['gaiaId'] = api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
+        data['hotels'] = botfunc.get_hotels(data)
         bot.send_message(message.from_user.id, f'Выберите отель из списка', reply_markup=hotel_markup(data))
-        print('я тут')
-        if data['command'] == 'highprice':
-            print('я тут')
-            # test_callback()
+
+        if data['command'] == 'lowprice':
+            print('Я тут иф')

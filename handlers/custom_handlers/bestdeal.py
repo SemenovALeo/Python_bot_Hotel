@@ -7,7 +7,7 @@ from api import api
 
 
 @bot.callback_query_handler(func=lambda call: True)
-def test_callback(call): # <- passes a CallbackQuery type object to your function
+def best_deal(call): # <- passes a CallbackQuery type object to your function
     if call.message:
         # print(call.data)
         nameHotel = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']

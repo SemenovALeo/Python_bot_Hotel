@@ -26,12 +26,16 @@ def gef_foto(data):
 
 
 
-# def get_hotels(data):
-#     responce = api.api_request('properties/v2/list',data,'POST')
-#     if responce:
-#         hotels = list()
-#         for dest in responce['data']['propertySearch']['properties']:
-#             hotels.append({'id': dest['id'],'name': dest['name']})
-#     else:
-#         hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
-#     return hotels
+def get_hotels(data):
+    responce = api.api_request('properties/v2/list',data,'POST')
+    if responce:
+        hotels = list()
+        for dest in responce['data']['propertySearch']['properties']:
+            hotels.append({'id': dest['id'],'name': dest['name']})
+    else:
+        hotels = list({'id': '2', 'name': 'Ответа нет, вернитесь назад'})
+
+    if data['command'] == '/highprice':
+        hotels.reverse()
+
+    return hotels
