@@ -1,7 +1,7 @@
 from keyboards.inline.hotel import hotel_markup
 from loader import bot
 from states.UserState import User_State
-from telebot.types import Message, InputMediaPhoto
+from telebot.types import Message
 import utils.botfunc as botfunc
 from api import api
 
@@ -59,6 +59,3 @@ def get_adults(message: Message) -> None:
         data['gaiaId'] = api.api_request('locations/v3/search',data,'GET')['sr'][0]['gaiaId']
         data['hotels'] = botfunc.get_hotels(data)
         bot.send_message(message.from_user.id, f'Выберите отель из списка', reply_markup=hotel_markup(data))
-
-        if data['command'] == 'lowprice':
-            print('Я тут иф')

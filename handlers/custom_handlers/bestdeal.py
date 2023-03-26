@@ -1,22 +1,22 @@
-from keyboards.inline.hotel import hotel_markup
 from loader import bot
-from states.UserState import User_State
-from telebot.types import Message, InputMediaPhoto
+from telebot.types import InputMediaPhoto
 import utils.botfunc as botfunc
 from api import api
 
 
-@bot.callback_query_handler(func=lambda call: True)
+@bot.callback_query_handler(func=lambda call: call.data == 'bestdeal')
 def best_deal(call): # <- passes a CallbackQuery type object to your function
     if call.message:
-        # print(call.data)
-        nameHotel = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['name']
-        addressLine = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']['summary']['location']['address']['addressLine']
-        print('Я тут best')
+        hotel_detail = api.api_request('properties/v2/detail', call.data, 'POST')['data']['propertyInfo']
+        nameHotel = hotel_detail['summary']['name']
+        addressLine = hotel_detail['summary']['location']['address']['addressLine']
+
         with bot.retrieve_data(call.from_user.id) as data:
             data['hotelName'] = nameHotel
-        price = api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'][0]['price']['lead']['formatted']
-        distance = api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'][0]['destinationInfo']['distanceFromDestination']['value']
+
+        hotel_list = api.api_request('properties/v2/list', data, 'POST')['data']['propertySearch']['properties'][0]
+        price = hotel_list['price']['lead']['formatted']
+        distance = hotel_list['destinationInfo']['distanceFromDestination']['value']
 
         medias = [
             InputMediaPhoto(botfunc.gef_foto(call.data)[0]),
