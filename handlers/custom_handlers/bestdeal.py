@@ -11,7 +11,7 @@ def best_deal(call): # <- passes a CallbackQuery type object to your function
         nameHotel = hotel_detail['summary']['name']
         addressLine = hotel_detail['summary']['location']['address']['addressLine']
         photos = botfunc.gef_foto(hotel_detail)
-
+        website = f'https://www.hotels.com/h{call.data}.Hotel-Information'
         with bot.retrieve_data(call.from_user.id) as data:
             data['hotelName'] = nameHotel
 
@@ -28,7 +28,8 @@ def best_deal(call): # <- passes a CallbackQuery type object to your function
                                            f'<b>Адресс: </b> {addressLine}\n'
                                            f'<b>расположению от центра: </b> {distance} миль\n'
                                            f'<b>Цена: </b> {price}\n'
-                                           f'<b>Сайт: </b> https://www.hotels.com/h{call.data}.Hotel-Information'
+                                           f'<b>Сайт: </b> {website}'
                          ,parse_mode='Html')
+        botfunc.setter_bd(call,data,nameHotel,addressLine,distance,price,website)
 
 

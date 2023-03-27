@@ -10,6 +10,7 @@ def high_price(call): # <- passes a CallbackQuery type object to your function
         hotel_detail = api.api_request('properties/v2/detail', call.data, 'POST')['data']['propertyInfo']
         nameHotel = hotel_detail['summary']['name']
         addressLine = hotel_detail['summary']['location']['address']['addressLine']
+        website = f'https://www.hotels.com/h{call.data}.Hotel-Information'
         photos = botfunc.gef_foto(hotel_detail)
 
         with bot.retrieve_data(call.from_user.id) as data:
@@ -31,4 +32,5 @@ def high_price(call): # <- passes a CallbackQuery type object to your function
                                            f'<b>Сайт: </b> https://www.hotels.com/h{call.data}.Hotel-Information'
                          ,parse_mode='Html')
 
+        botfunc.setter_bd(call, data, nameHotel, addressLine, distance, price, website)
 

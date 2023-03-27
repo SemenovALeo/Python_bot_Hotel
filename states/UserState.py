@@ -10,5 +10,6 @@ class User_State(StatesGroup):
     children = State() # кол-во дитей
     check_in = State()  # выбор даты заезда
     check_out = State()  # выбор даты выезда
+    history = State()
     all = State()  # все данные получены
     # price = State()

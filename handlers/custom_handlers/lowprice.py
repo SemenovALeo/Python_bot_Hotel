@@ -4,12 +4,14 @@ import utils.botfunc as botfunc
 from api import api
 
 
+
 @bot.callback_query_handler(func=lambda call: call.data == 'lowprice')
 def low_price(call): # <- passes a CallbackQuery type object to your function
     if call.message:
         hotel_detail = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']
         name_Hotel = hotel_detail['summary']['name']
         address_Line = hotel_detail['summary']['location']['address']['addressLine']
+        website = f'https://www.hotels.com/h{call.data}.Hotel-Information'
         photos = botfunc.gef_foto(hotel_detail)
         with bot.retrieve_data(call.from_user.id) as data:
             data['hotelName'] = name_Hotel
@@ -28,7 +30,9 @@ def low_price(call): # <- passes a CallbackQuery type object to your function
                                            f'<b>Адресс: </b> {address_Line}\n'
                                            f'<b>Расположению от центра: </b> {distance} миль\n'
                                            f'<b>Цена: </b> {price}\n'
-                                           f'<b>Сайт: </b> https://www.hotels.com/h{call.data}.Hotel-Information'
+                                           f'<b>Сайт: </b> {website}'
                          ,parse_mode='Html')
+
+        botfunc.setter_bd(call,data,name_Hotel,address_Line,distance,price,website)
 
 

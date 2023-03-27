@@ -4,6 +4,7 @@ from states.UserState import User_State
 from telebot.types import Message
 import utils.botfunc as botfunc
 from api import api
+from database import models
 
 @bot.message_handler(commands=['highprice', 'bestdeal', 'lowprice'])
 def lowprice(message: Message) -> None:
