@@ -11,7 +11,7 @@ def get_datetime_str(value):
 
 
 def gef_foto(data):
-    value = api.api_request('properties/v2/detail',data,'POST')['data']['propertyInfo']['propertyGallery']['images']
+    value = data['propertyGallery']['images']
     foto = []
     count = 0
     for i in value:

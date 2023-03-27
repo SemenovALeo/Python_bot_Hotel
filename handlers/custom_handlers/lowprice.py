@@ -10,6 +10,7 @@ def low_price(call): # <- passes a CallbackQuery type object to your function
         hotel_detail = api.api_request('properties/v2/detail',call.data,'POST')['data']['propertyInfo']
         name_Hotel = hotel_detail['summary']['name']
         address_Line = hotel_detail['summary']['location']['address']['addressLine']
+        photos = botfunc.gef_foto(hotel_detail)
         with bot.retrieve_data(call.from_user.id) as data:
             data['hotelName'] = name_Hotel
 
@@ -17,12 +18,10 @@ def low_price(call): # <- passes a CallbackQuery type object to your function
         hotel_list = api.api_request('properties/v2/list',data,'POST')['data']['propertySearch']['properties'][0]
         price = hotel_list['price']['lead']['formatted']
         distance = hotel_list['destinationInfo']['distanceFromDestination']['value']
+        medias = []
 
-        medias = [
-            InputMediaPhoto(botfunc.gef_foto(call.data)[0]),
-            InputMediaPhoto(botfunc.gef_foto(call.data)[1]),
-            InputMediaPhoto(botfunc.gef_foto(call.data)[2])
-        ]
+        for foto in photos:
+            medias.append(InputMediaPhoto(foto))
 
         bot.send_media_group(call.from_user.id,medias)
         bot.send_message(call.from_user.id,f'<b>Название:</b> {name_Hotel}\n'

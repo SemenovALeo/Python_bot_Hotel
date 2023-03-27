@@ -15,7 +15,6 @@ def lowprice(message: Message) -> None:
 
 @bot.message_handler(state=User_State.city)
 def get_city(message: Message) -> None:
-    # if message.text.isalpha():
         bot.send_message(message.from_user.id, f'Сколько отелей показываем? (не больше 10)')
         bot.set_state(message.from_user.id, User_State.number_of_hotels)
 
