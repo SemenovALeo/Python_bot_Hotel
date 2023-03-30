@@ -73,9 +73,9 @@ def setter_bd(call, data, name_Hotel, address_Line, distance, price, website ):
         username = call.from_user.username
     )
 
-    Orders = models.Order(
+    Order = models.Order(
         user_id = User_new,
-        command=data['command'],
+        command= data['command'],
         city=data['city'],
         quantity_hotel=data['quantity_hotel'],
         check_in=f"{data['check_in']['day']}.{data['check_in']['month']}."
@@ -85,9 +85,9 @@ def setter_bd(call, data, name_Hotel, address_Line, distance, price, website ):
         adults=data['adults'],
     ).save()
 
-
-    models.Extradition(
-        command=Orders,
+    Exception = models.Extradition(
+        User_id = User_new,
+        command_id = Order,
         name=name_Hotel,
         address=address_Line,
         distance=distance,
