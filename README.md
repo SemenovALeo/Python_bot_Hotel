@@ -29,7 +29,7 @@ pip install peewee
 4. Создать нового бота и получить токен для работы с ним
 5. Переименовать файл .env.template в .env, указать в нем свой токен для бота и ключ от Rapid API
 >Пример файла .env:<br>
-BOT_TOKEN='5129698927:AAGDrtF8BhpsZkfJkz8d8V8sd80--------'
+BOT_TOKEN='5129698927:AAGDrtF8BhpsZkfJkz8d8V8sd80--------'<br>
 RAPID_API_KEY='e16bf7299amsh132539e6181c99dp1996efjsnf55b--------'.
 6. Запустить программу
 ```
